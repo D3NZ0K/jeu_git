@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
+[RequireComponent(typeof(EdgeCollider2D))]
 public class Ribbon : MonoBehaviour
 {
     public float distance = 0.05f;
@@ -13,10 +14,13 @@ public class Ribbon : MonoBehaviour
     List<Vector3> positions = new List<Vector3>();
     float sqrMagnitude;
     bool mouseDown, draw;
+
+    EdgeCollider2D edgeCollider;
     
 
     void Awake()
     {
+        edgeCollider = GetComponent<EdgeCollider2D>();
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.startWidth = lineRenderer.endWidth = 0.1f;
         lineRenderer.material = lineMat;
@@ -99,9 +103,16 @@ public class Ribbon : MonoBehaviour
             Vector2 start = lineRenderer.GetPosition(0);
             Vector2 end = lineRenderer.GetPosition(lineRenderer.positionCount - 1);
 
+            List<Vector2> StartEnd = new List<Vector2>();
+
+            StartEnd.Add(start);
+            StartEnd.Add(end);
+
             lineRenderer.positionCount = 2;
             lineRenderer.SetPosition(0, start);
             lineRenderer.SetPosition(1, end);
+
+            edgeCollider.points = StartEnd.ToArray();
         }
     }
 
