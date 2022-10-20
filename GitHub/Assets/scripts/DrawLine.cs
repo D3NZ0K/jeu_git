@@ -14,6 +14,7 @@ public class DrawLine : MonoBehaviour
     [SerializeField] private float timeBeforeFade = 1;
 
     public float distance;
+    public float maxDistance;
 
     public int lineLenght;
 
@@ -37,7 +38,7 @@ public class DrawLine : MonoBehaviour
         {
             Vector2 tempMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            if (Vector2.Distance(tempMousePos, mousePositions[mousePositions.Count - 1]) > distance)
+            if (Vector2.Distance(tempMousePos, mousePositions[mousePositions.Count - 1]) > distance && Vector2.Distance(tempMousePos, mousePositions[mousePositions.Count - 1]) < maxDistance)
             {
                 UpdateLine(tempMousePos);
                 UpdateNotDraw(tempMousePos);
