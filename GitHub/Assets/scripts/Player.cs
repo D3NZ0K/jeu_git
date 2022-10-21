@@ -7,9 +7,12 @@ public class Player : MonoBehaviour
     [SerializeField] private Sprite idle;
     [SerializeField] private Sprite down;
     [SerializeField] private Sprite up;
+    [SerializeField] private int repulseForce;
 
     private Rigidbody2D rb;
     private SpriteRenderer spriteR;
+
+    
 
     private void Start()
     {
@@ -33,5 +36,11 @@ public class Player : MonoBehaviour
         {
             spriteR.sprite = idle;
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        int xForce = Random.Range(0, 5);
+        rb.AddForce(new Vector2(xForce, repulseForce), ForceMode2D.Impulse);
     }
 }
