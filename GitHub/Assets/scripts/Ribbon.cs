@@ -191,6 +191,9 @@ public class Ribbon : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         collision.rigidbody.AddForce(new Vector2(0, 10), ForceMode2D.Impulse);
-        StartCoroutine(BoingAnim());
+        if (lineRenderer.positionCount > 4)
+        {
+            StartCoroutine(BoingAnim());
+        }
     }
 }
