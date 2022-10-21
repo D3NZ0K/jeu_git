@@ -19,9 +19,12 @@ public class Ribbon : MonoBehaviour
 
     private List<Vector2> StartEnd = new List<Vector2>();
 
-    [SerializeField] private float boingIntensity;
+    [SerializeField] private int boingNumber;
+    [SerializeField] private float boingDistance = 0.5f;
+    [SerializeField] private float boingTime = 0.05f;
 
     private bool disapeared;
+    
 
 
 
@@ -36,12 +39,14 @@ public class Ribbon : MonoBehaviour
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
+        {
             StartDrawing();
+        }
+
         else if (Input.GetMouseButtonUp(0))
         {
             StopDrawing();
             CreateSimpleLine();
-            StartCoroutine(FadeAnim());
         }
 
 
@@ -154,16 +159,28 @@ public class Ribbon : MonoBehaviour
 
     private IEnumerator BoingAnim ()
     {
-        lineRenderer.SetPosition(2, new Vector2(StartEnd[2].x + 2, StartEnd[2].y + 2));
+        for (int i = 0; i < boingNumber; i++)
+        {
+            boingDistance = -boingDistance;
 
-        yield return new WaitForEndOfFrame();
-    }
+            // direction of your line
+            var direction = (StartEnd[4] - StartEnd[0]).normalized;
+            // perpendicular direction
+            var perpendicularDirection = Vector2.Perpendicular(direction).normalized;
+            // and finally the point C is starting from the center point go in perpendicular direction
+            Vector2 a = StartEnd[2] + perpendicularDirection * boingDistance;
+            Vector2 b = StartEnd[1] + perpendicularDirection * (boingDistance / 1.4f);
+            Vector2 c = StartEnd[3] + perpendicularDirection * (boingDistance / 1.4f);
 
-    private IEnumerator FadeAnim()
-    {
-            yield return new WaitForSeconds(1.5f);
-            lineRenderer.positionCount = 0;
-            edgeCollider.enabled = false;
+            lineRenderer.SetPosition(2, a);
+            lineRenderer.SetPosition(1, b);
+            lineRenderer.SetPosition(3, c);
+
+            yield return new WaitForSeconds(boingTime);
+        }
+
+        lineRenderer.positionCount = 0;
+        edgeCollider.enabled = false;
     }
 
 
@@ -174,5 +191,6 @@ public class Ribbon : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         collision.rigidbody.AddForce(new Vector2(0, 10), ForceMode2D.Impulse);
+        StartCoroutine(BoingAnim());
     }
 }

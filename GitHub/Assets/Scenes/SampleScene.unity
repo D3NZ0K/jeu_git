@@ -680,7 +680,9 @@ MonoBehaviour:
   distance: 0.1
   lineMat: {fileID: 2100000, guid: e83a99ab11989c44b83e7e118c14c741, type: 2}
   ribbonLength: 20
-  boingIntensity: 0
+  boingNumber: 5
+  boingDistance: 0.2
+  boingTime: 0.07
 --- !u!120 &2009945828
 LineRenderer:
   m_ObjectHideFlags: 0
