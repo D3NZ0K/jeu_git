@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer spriteR;
 
-    private Camera mainCamera;
+    private Animator animator;
 
 
     private void Start()
@@ -43,6 +43,17 @@ public class Player : MonoBehaviour
         {
             SceneManager.LoadScene(0);
         }
+    }
+
+    public void AnimationEnd()
+    {
+        animator = gameObject.GetComponent<Animator>();
+        animator.enabled = true;
+    }
+
+    public void ReturnHome()
+    {
+        SceneManager.LoadScene(0);
     }
 
 }
