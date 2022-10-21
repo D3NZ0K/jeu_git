@@ -195,6 +195,5 @@ public class Ribbon : MonoBehaviour
         {
             StartCoroutine(BoingAnim());
         }
-        
     }
 }
