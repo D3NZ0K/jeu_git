@@ -11,10 +11,16 @@ public class CamFollow : MonoBehaviour
     private Vector3 currentVelocity;
     public Vector3 offset;
     private Vector3 newPos;
+    public bool theEnd;
 
     private void LateUpdate()
-    {            
-        if (target.gameObject.GetComponent<Rigidbody2D>().velocity.y <= 0) {
+    {   
+        if (theEnd)
+        {
+            transform.position = new Vector3(target.position.x, target.position.y, -10);
+        }
+
+        else if (target.gameObject.GetComponent<Rigidbody2D>().velocity.y <= 0) {
                 newPos = transform.position;
         }
 
@@ -24,6 +30,7 @@ public class CamFollow : MonoBehaviour
             transform.position = Vector3.SmoothDamp(transform.position, newPos, ref currentVelocity, smoothSpeed * Time.deltaTime, 60f);
         }
     }
+
 }
 
 
