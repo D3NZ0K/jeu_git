@@ -22,6 +22,10 @@ public class Ribbon : MonoBehaviour
     [SerializeField] private int boingNumber;
     [SerializeField] private float boingDistance = 0.5f;
     [SerializeField] private float boingTime = 0.05f;
+    [SerializeField] private float boingIntensity = 15f;
+
+    public GameObject Player;
+    public Rigidbody2D playerCollider;
 
     private bool disapeared;
     
@@ -36,10 +40,20 @@ public class Ribbon : MonoBehaviour
         lineRenderer.material = lineMat;
     }
 
+    private void Start()
+    {
+        playerCollider = Player.GetComponent<Rigidbody2D>();
+        playerCollider.isKinematic = true;
+    }
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
+            if (playerCollider != null && playerCollider.isKinematic)
+            {
+                playerCollider.isKinematic = false;
+            }
             StartDrawing();
         }
 
@@ -190,7 +204,7 @@ public class Ribbon : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        collision.rigidbody.AddForce(new Vector2(0, 10), ForceMode2D.Impulse);
+        collision.rigidbody.AddForce(new Vector2(0, boingIntensity), ForceMode2D.Impulse);
         if (lineRenderer.positionCount > 4)
         {
             StartCoroutine(BoingAnim());
