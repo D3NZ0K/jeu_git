@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class Player : MonoBehaviour
 
     private Rigidbody2D rb;
     private SpriteRenderer spriteR;
+
+    private Camera mainCamera;
+
 
     private void Start()
     {
@@ -33,5 +37,12 @@ public class Player : MonoBehaviour
         {
             spriteR.sprite = idle;
         }
+
+        Vector2 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
+        if (screenPosition.y < -0.04 * Screen.height)
+        {
+            SceneManager.LoadScene(0);
+        }
     }
+
 }

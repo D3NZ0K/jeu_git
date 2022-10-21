@@ -21,7 +21,7 @@ public class CamFollow : MonoBehaviour
         else if (target.position.y > transform.position.y)
         {
             newPos = new Vector3(transform.position.x, target.position.y, -10);
-            transform.position = Vector3.SmoothDamp(transform.position, newPos, ref currentVelocity, smoothSpeed * Time.deltaTime, 40f);
+            transform.position = Vector3.SmoothDamp(transform.position, newPos, ref currentVelocity, smoothSpeed * Time.deltaTime, 60f);
         }
     }
 }
